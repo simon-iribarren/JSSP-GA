@@ -115,48 +115,55 @@ def removeFromList(parent, list):
     seen_add = seen.add
     return [x for x in parent if not (x in list or seen_add(x))]
 
+def generate_population(number, n, mn):
+        population = []
+        for i in range(number):
+            ind = range(n*mn)
+            random.shuffle(ind)
+            population.append([ind, None])
+
+        population.append(range(n*mn))
+        return population
+
+def crossover(father, mother, start_index, end_index):
+    sperm = father[0][start_index:end_index]
+    fetus = removeFromList(mother[0], sperm)
+    result = [];
+    result.extend(fetus[:start_index])
+    result.extend(sperm)
+    result.extend(fetus[start_index:])
+    return [result, None]
+
+def mutation(population, mutation_rate):
+    new_population = []
+    for individual in population:
+        if(random.random() > mutation_rate):
+            new_individual = [swap_rnd(individual[0]), None]
+            new_population.append(individual)
+        else:
+            new_population.append(individual)
+    return new_population
+
 def genetic(times, machines, n, population_number, generations, rate):
     machine_number = len(machines[0])
     base_arr = range(n*machine_number)
-
-    def generate_population(number, n):
-        population = []
-        for i in range(number):
-            ind = range(n*machine_number)
-            random.shuffle(ind)
-            population.append(ind)
-
-        population.append(range(n*machine_number))
-        return population
-
-
-    def crossover(father, mother, start_index, end_index):
-        sperm = father[start_index:end_index]
-        fetus = removeFromList(mother, sperm)
-        result = [];
-        result.extend(fetus[:start_index])
-        result.extend(sperm)
-        result.extend(fetus[start_index:])
-        return result
-    
-    def mutation(population, mutation_rate):
-        new_population = []
-        for individual in population:
-            if(random.random() > mutation_rate):
-                new_population.append(swap_rnd(individual))
-            else:
-                new_population.append(individual)
-        return new_population
 
     def bestIndividual(population, gen):
         best_individual = None
         best_result = None
         for individual in population:
-            result, table = calculate_time(times, machines, individual, n)
+            result = None
+            if not individual[1]: 
+                result, table = calculate_time(times, machines, individual, n)
+                individual[1] = result
+            else: 
+                result = individual[1]
+
             if not best_result or result < best_result:
                 best_result = result
                 best_individual = individual
 
+        population.sort(key=lambda x: x[1])
         return best_individual, best_result
 
     def evolve(population, mutation_rate, generation):
@@ -175,9 +182,7 @@ def genetic(times, machines, n, population_number, generations, rate):
         new_population.append(best_ind)
         return new_population
 
-
-
-    population = generate_population(population_number, n)
+    population = generate_population(population_number, n, mn)
     result = None
     result_ind = None
 
