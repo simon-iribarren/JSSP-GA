@@ -1,5 +1,6 @@
 
 import random
+from calculateMakespan import calculateMakespan
 
 def readFilePairs(filepath):
     times_done = False
@@ -49,33 +50,6 @@ def readSolution(filepath):
         for j in range(len(machines)):
             sequence.append(machines[j][i])
     return sequence
-
-
-def readFile(filepath):
-    times_done = False
-    times = []
-    machines = []
-
-    with open(filepath) as fp:
-
-        line = fp.readline()
-        while line:
-            raw_line = line.strip().split(' ')
-            curr = []
-            for char in raw_line:
-                if len(char) > 0:
-                    curr.append(int(char))
-
-            if len(curr) == 0:
-                times_done = True
-            else:
-                if times_done:
-                    machines.append(curr)
-                else: 
-                    times.append(curr)
-
-            line = fp.readline()
-    return times, machines, len(times)
 
 def swap_rnd(config):
     id1 = random.choice(range(len(config)))

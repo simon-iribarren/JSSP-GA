@@ -5,8 +5,8 @@ def calculateMakespan(times, machines, config, n):
     time_table = []
     times = copy.deepcopy(times)
     machines = copy.deepcopy(machines)
-    machine_number = len(machines[0])
-    for i in range(machine_number):
+    mn = len(machines[0])
+    for i in range(mn):
         time_table.append([])
 
     current_times = [0]*n
@@ -58,6 +58,6 @@ def fillTimeSlot(machine_usage, current_time, usage_time, job, total_time):
 
     else: 
         machine_usage.append([current_time, usage_time + current_time, job])
-        current_time += usage_time;
+        current_time += usage_time
 
     return current_time, total_time
