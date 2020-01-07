@@ -16,7 +16,7 @@ def calculateMakespan(times, machines, config, n):
         current_machine = machines[job].pop(0)
         current_time = current_times[job]
         machine_usage = time_table[current_machine]
-        usage_time = times[job][current_machine]
+        usage_time = times[job].pop(0)
         current_time, total_time = fillTimeSlot(machine_usage, current_time, usage_time, job, total_time)
 
         current_times[job] = current_time
