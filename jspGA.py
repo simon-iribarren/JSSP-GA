@@ -4,6 +4,7 @@ import sys
 from calculateMakespan import calculateMakespan
 from GAOperations import checkDiversity, generate_population, getFitness, evolve
 from plotResult import plotResult
+from utils import fromPermutation
 
 
 
@@ -76,4 +77,6 @@ def genetic(times, machines, n, population_number, iterations, rate, target):
     print("\nOVERALL RESULT")
     print("RESULT: %s" %best_result)                 
     print('the elapsed time:%ss'% (int(time.time() - start_time)))
+    print("Permutation: ")
+    print(fromPermutation(global_best_ind[0], n))
     plotResult(best_table, best_result)

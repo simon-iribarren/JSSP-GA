@@ -59,6 +59,9 @@ def swap_rnd(config):
     config[id2] = tmp
     return config
 
+def fromPermutation(permutation, n):
+    return list(map(lambda  x: x%n, permutation))
+
 def testPermutation(permutation, times, machines, n):
     best_result, table = calculateMakespan(times, machines, permutation, n)
     print("SEQUENCE")
