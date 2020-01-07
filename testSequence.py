@@ -1,4 +1,4 @@
-from utils import readFilePairs
+from utils import readFilePairs, printTable
 from calculateMakespan import calculateMakespan
 
 
@@ -10,3 +10,4 @@ result, table =  calculateMakespan(times, machines, sequence, n)
 print("RESULT: %s" %result)
 print("Sequence: ")
 print(sequence)
+printTable(table)

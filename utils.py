@@ -78,3 +78,10 @@ def testPermutation(permutation, times, machines, n):
             job_sequence.append(slot[2])
         i += 1
     print(job_sequence)
+
+def printTable(table):
+    i = 1
+    print("TABLE: ")
+    for row in table:
+        print("M%s: %s" %(i, row))
+        i += 1
